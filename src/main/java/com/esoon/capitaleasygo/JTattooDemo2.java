@@ -31,6 +31,7 @@ import com.esoon.capitaleasygo.ui.MainMenuBar;
 import com.esoon.capitaleasygo.ui.MainPanel;
 import com.esoon.capitaleasygo.ui.MainToolBar;
 import com.esoon.capitaleasygo.ui.RightPanel;
+import com.esoon.capitaleasygo.ui.SettingPanel;
 import com.esoon.capitaleasygo.ui.SplashPanel;
 import com.jtattoo.plaf.AbstractLookAndFeel;
 import com.jtattoo.plaf.AbstractTheme;
@@ -38,7 +39,7 @@ import com.jtattoo.plaf.AbstractTheme;
 /**
  * @author Michael Hagen
  */
-public class JTattooDemo extends JFrame implements IDemoApp {
+public class JTattooDemo2 extends JFrame implements IDemoApp {
     public static GUIProperties guiProps = new GUIProperties();
     
     private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,7 +48,7 @@ public class JTattooDemo extends JFrame implements IDemoApp {
     private static final int appPosY = (screenSize.height / 2) - (appSize.height / 2);
     private static Rectangle appBounds = new Rectangle(appPosX, appPosY, appSize.width, appSize.height);
     private static final String appTitle = "JTattoo - Demo";
-    private static JTattooDemo app = null;
+    private static JTattooDemo2 app = null;
     
     private JWindow splashScreen = null;
     private SplashPanel splashPanel = null;
@@ -55,17 +56,17 @@ public class JTattooDemo extends JFrame implements IDemoApp {
     private MainMenuBar menuBar = null;
     private MainToolBar toolBar = null;
     private JPanel contentPanel = null;
-    private LeftPanel leftPanel = null;
-    private RightPanel rightPanel = null;
-    private JSplitPane splitPane = null;
+//    private LeftPanel leftPanel = null;
+    private MainPanel mainPanel = null;
+//    private JSplitPane splitPane = null;
     private JTabbedPane mainTabbedPane = null;
     
-    public JTattooDemo() {
+    public JTattooDemo2() {
         super(appTitle);
         init();
     }
     
-    public JTattooDemo(Rectangle bounds) {
+    public JTattooDemo2(Rectangle bounds) {
         super(appTitle);
         appBounds = bounds;
         init();
@@ -122,12 +123,12 @@ public class JTattooDemo extends JFrame implements IDemoApp {
     
     private void initContentPane() {
         contentPanel = new JPanel(new BorderLayout());
-        leftPanel = new LeftPanel(this);
-        rightPanel = new RightPanel(this);
-        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, leftPanel, rightPanel);
-        splitPane.setDividerLocation(180);
+//        leftPanel = new LeftPanel(this);
+        mainPanel = new MainPanel(this);
+//        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, leftPanel, rightPanel);
+//        splitPane.setDividerLocation(180);
         contentPanel.add(toolBar, BorderLayout.NORTH);
-        contentPanel.add(splitPane, BorderLayout.CENTER);
+        contentPanel.add(mainPanel, BorderLayout.CENTER);
         setContentPane(contentPanel);
     }
     
@@ -215,7 +216,7 @@ public class JTattooDemo extends JFrame implements IDemoApp {
                 // Reboot the application
                 Rectangle savedBounds = getBounds();
                 dispose();
-                app = new JTattooDemo(savedBounds);
+                app = new JTattooDemo2(savedBounds);
                 app.setBounds(savedBounds);
             }
             else {
@@ -223,8 +224,8 @@ public class JTattooDemo extends JFrame implements IDemoApp {
                 getRootPane().updateUI();
                 SwingUtilities.updateComponentTreeUI(this);
                 menuBar.updateLookAndFeel();
-                leftPanel.updateLookAndFeel();
-                rightPanel.updateLookAndFeel();
+//                leftPanel.updateLookAndFeel();
+//                mainPanel.updateLookAndFeel();
             }
         }
         catch (Exception ex) {
@@ -266,8 +267,8 @@ public class JTattooDemo extends JFrame implements IDemoApp {
                 getRootPane().updateUI();
                 SwingUtilities.updateComponentTreeUI(this);
                 menuBar.updateLookAndFeel();
-                leftPanel.updateLookAndFeel();
-                rightPanel.updateLookAndFeel();
+//                leftPanel.updateLookAndFeel();
+//                mainPanel.updateLookAndFeel();
             }
             catch (Exception ex) {
                 System.out.println("Failed setting theme! Exception: " + ex.getMessage());
@@ -340,8 +341,8 @@ public class JTattooDemo extends JFrame implements IDemoApp {
                 getRootPane().updateUI();
                 SwingUtilities.updateComponentTreeUI(this);
                 menuBar.updateLookAndFeel();
-                leftPanel.updateLookAndFeel();
-                rightPanel.updateLookAndFeel();
+//                leftPanel.updateLookAndFeel();
+//                mainPanel.updateLookAndFeel();
             }
         }
         catch (Exception ex) {
@@ -414,8 +415,9 @@ public class JTattooDemo extends JFrame implements IDemoApp {
                 getRootPane().updateUI();
                 SwingUtilities.updateComponentTreeUI(this);
                 menuBar.updateLookAndFeel();
-                leftPanel.updateLookAndFeel();
-                rightPanel.updateLookAndFeel();
+//                leftPanel.updateLookAndFeel();
+//                SettingPanel.updateLookAndFeel();
+//                mainPanel.updateLookAndFeel();
             }
         }
         catch (Exception ex) {
@@ -426,7 +428,7 @@ public class JTattooDemo extends JFrame implements IDemoApp {
     public static void main(String args[]) {
         try {
             UIManager.setLookAndFeel(guiProps.getLookAndFeel());
-            app = new JTattooDemo();
+            app = new JTattooDemo2();
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -443,7 +445,7 @@ public class JTattooDemo extends JFrame implements IDemoApp {
 	    
 	public MainPanel getMainPanel() {
 		// TODO Auto-generated method stub
-		return null;
+		return mainPanel;
 	}
     
     

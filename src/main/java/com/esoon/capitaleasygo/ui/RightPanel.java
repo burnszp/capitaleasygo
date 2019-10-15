@@ -72,7 +72,7 @@ public class RightPanel extends JPanel {
         JButton bigButton = new JButton("Extra Large");
         bigButtonPanel.add(bigButton, BorderLayout.CENTER);
         
-        tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+        tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
         tabbedPane.add(internalFramePanel.getName(), internalFramePanel);
         tabbedPane.add(widgetPanel.getName(), widgetPanel);
         tabbedPane.add(sliderPanel.getName(), sliderPanel);
@@ -89,7 +89,7 @@ public class RightPanel extends JPanel {
         tabbedPane.add(tablePanel.getName(), tablePanel);
         tabbedPane.add("BigButton", bigButtonPanel);
         
-        tabbedPane.setTabPlacement(JTabbedPane.TOP);
+        tabbedPane.setTabPlacement(JTabbedPane.LEFT);
         tabbedPane.setSelectedIndex(1);
         
         add(tabbedPane, BorderLayout.CENTER);

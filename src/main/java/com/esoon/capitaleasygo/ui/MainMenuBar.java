@@ -16,11 +16,15 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 
 import com.esoon.capitaleasygo.image.ImageHelper;
+import com.esoon.capitaleasygo.ui.MainPanel.CloseableTabComponent;
+import com.jtattoo.plaf.JTattooUtilities;
 
 /**
  * @author  Michael Hagen
@@ -317,6 +321,42 @@ public class MainMenuBar extends JMenuBar {
         });
         menuItem.setMnemonic('A');
         menu.add(menuItem);
+        add(menu);
+        
+        
+        menu = new JMenu("Window");
+        menu.setMnemonic('W');
+        menuItem = new JMenuItem("Setting");
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SettingDialog dlg = new SettingDialog(parent);
+            }
+        });
+        menuItem.setMnemonic('S');
+        menu.add(menuItem);
+//        menu.addSeparator();
+        add(menu);
+        
+        
+        menu = new JMenu("Action");
+        menu.setMnemonic('A');
+        menuItem = new JMenuItem("Demo");
+        menuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+//        		SettingDialog dlg = new SettingDialog(parent);
+
+        		JTabbedPane tabbedPane = demoApp.getMainPanel().tabbedPane;
+                if (JTattooUtilities.getJavaVersion() >= 1.6) {
+                    int tabCount = tabbedPane.getTabCount();
+                    tabbedPane.add("Tab", new RightPanel(parent));
+                    tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent("Demo",tabbedPane));
+                }
+            
+        	}
+        });
+        menuItem.setMnemonic('D');
+        menu.add(menuItem);
+//        menu.addSeparator();
         add(menu);
     }
     

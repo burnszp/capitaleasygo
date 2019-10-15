@@ -15,6 +15,7 @@ public interface IDemoApp {
     public void setTextAntiAliasing(boolean taa);
     public void setBackgroundPattern(boolean pattern);
     public void performExit();
+    public MainPanel getMainPanel();
     
     
 }
