@@ -22,7 +22,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 
-import com.esoon.capitaleasygo.cis.ui.CisPanel;
+import com.esoon.capitaleasygo.action.cis.ui.CisPanel;
+import com.esoon.capitaleasygo.action.whereusedinproject.WhereUsedInProjectPanel;
 import com.esoon.capitaleasygo.image.ImageHelper;
 import com.esoon.capitaleasygo.ui.MainPanel.CloseableTabComponent;
 import com.jtattoo.plaf.JTattooUtilities;
@@ -375,6 +376,24 @@ public class MainMenuBar extends JMenuBar {
         	}
         });
         menuItem.setMnemonic('C');
+        menu.add(menuItem);
+        menu.addSeparator();
+        menuItem = new JMenuItem("WhereUsedInProject");
+        menuItem.setToolTipText("Capital中项目下的设计中元器件的使用情况");
+        menuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+//        		SettingDialog dlg = new SettingDialog(parent);
+        		
+        		JTabbedPane tabbedPane = demoApp.getMainPanel().tabbedPane;
+        		if (JTattooUtilities.getJavaVersion() >= 1.6) {
+        			int tabCount = tabbedPane.getTabCount();
+        			tabbedPane.add("Tab", new WhereUsedInProjectPanel(parent));
+        			tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent("WhereUsedInProject",tabbedPane));
+        		}
+        		
+        	}
+        });
+        menuItem.setMnemonic('W');
         menu.add(menuItem);
         add(menu);
     }
