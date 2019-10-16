@@ -22,6 +22,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 
+import com.esoon.capitaleasygo.cis.ui.CisPanel;
 import com.esoon.capitaleasygo.image.ImageHelper;
 import com.esoon.capitaleasygo.ui.MainPanel.CloseableTabComponent;
 import com.jtattoo.plaf.JTattooUtilities;
@@ -341,6 +342,7 @@ public class MainMenuBar extends JMenuBar {
         menu = new JMenu("Action");
         menu.setMnemonic('A');
         menuItem = new JMenuItem("Demo");
+        menuItem.setToolTipText("Jtatto的代码示例效果");
         menuItem.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 //        		SettingDialog dlg = new SettingDialog(parent);
@@ -356,7 +358,24 @@ public class MainMenuBar extends JMenuBar {
         });
         menuItem.setMnemonic('D');
         menu.add(menuItem);
-//        menu.addSeparator();
+        menu.addSeparator();
+        menuItem = new JMenuItem("Cis");
+        menuItem.setToolTipText("Capital Graphics 软件的Capital Integration Server模块的接口调用");
+        menuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+//        		SettingDialog dlg = new SettingDialog(parent);
+        		
+        		JTabbedPane tabbedPane = demoApp.getMainPanel().tabbedPane;
+        		if (JTattooUtilities.getJavaVersion() >= 1.6) {
+        			int tabCount = tabbedPane.getTabCount();
+        			tabbedPane.add("Tab", new CisPanel(parent));
+        			tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent("Cis",tabbedPane));
+        		}
+        		
+        	}
+        });
+        menuItem.setMnemonic('C');
+        menu.add(menuItem);
         add(menu);
     }
     
