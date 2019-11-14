@@ -16,13 +16,13 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.LookAndFeel;
 
 import com.esoon.capitaleasygo.action.cis.ui.CisPanel;
+import com.esoon.capitaleasygo.action.docgen.ui.DocGenPanel;
 import com.esoon.capitaleasygo.action.whereusedinproject.WhereUsedInProjectPanel;
 import com.esoon.capitaleasygo.image.ImageHelper;
 import com.esoon.capitaleasygo.ui.MainPanel.CloseableTabComponent;
@@ -389,6 +389,25 @@ public class MainMenuBar extends JMenuBar {
         			int tabCount = tabbedPane.getTabCount();
         			tabbedPane.add("Tab", new WhereUsedInProjectPanel(parent));
         			tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent("WhereUsedInProject",tabbedPane));
+        		}
+        		
+        	}
+        });
+        menuItem.setMnemonic('W');
+        menu.add(menuItem);
+        
+        menu.addSeparator();
+        menuItem = new JMenuItem("DocGen");
+        menuItem.setToolTipText("根据Capital设计源文件输出DocGen文件");
+        menuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+//        		SettingDialog dlg = new SettingDialog(parent);
+        		
+        		JTabbedPane tabbedPane = demoApp.getMainPanel().tabbedPane;
+        		if (JTattooUtilities.getJavaVersion() >= 1.6) {
+        			int tabCount = tabbedPane.getTabCount();
+        			tabbedPane.add("Tab", new DocGenPanel(parent));
+        			tabbedPane.setTabComponentAt(tabCount, new CloseableTabComponent("DocGen",tabbedPane));
         		}
         		
         	}

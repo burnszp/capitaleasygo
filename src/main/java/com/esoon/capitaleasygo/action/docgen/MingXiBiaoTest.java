@@ -149,6 +149,7 @@ public class MingXiBiaoTest {
 		allComponentList.addAll(connectivity.getMulticore());
 
 		Map<String, List<Object>> componentTypeNameAndComponentListMap = new HashMap<String, List<Object>>();
+		Map<String, List<Object>> fullComponentTypeNameAndComponentListMap = new HashMap<String, List<Object>>();
 		System.out.println("start------------------------components-----------------");
 		for (Object component : allComponentList) {
 			String componentType = component.getClass().getSimpleName();
@@ -158,10 +159,42 @@ public class MingXiBiaoTest {
 			}
 			componentList.add(component);
 			componentTypeNameAndComponentListMap.put(componentType, componentList);
+			
+			
+			String fullComponentType = component.getClass().getName();
+			List<Object> componentList1 = componentTypeNameAndComponentListMap.get(fullComponentType);
+			if(componentList1==null) {
+				componentList1 = new ArrayList<Object>();
+			}
+			componentList1.add(component);
+			fullComponentTypeNameAndComponentListMap.put(fullComponentType, componentList);
 		}
 		
 		for (Entry<String, List<Object>> entry : componentTypeNameAndComponentListMap.entrySet()) {
 			System.out.println("类型>>"+entry.getKey());
+			for (Object component : entry.getValue()) {
+				System.out.println(component.getClass().getName() + ">>" + component);
+			}
+			
+			//获取导线的信息
+			if(entry.getKey()==Wire.class.getSimpleName()) {
+				for (Object component : entry.getValue()) {
+					Wire wire = (Wire) component; 
+				}
+			}
+			
+		}
+		for (Entry<String, List<Object>> entry : fullComponentTypeNameAndComponentListMap.entrySet()) {
+			System.out.println("类型>>"+entry.getKey());
+			try {
+				Class c = Class.forName(entry.getKey());
+				Object obj = c.newInstance();
+				System.out.println(c);
+				System.out.println(obj);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (Object component : entry.getValue()) {
 				System.out.println(component.getClass().getName() + ">>" + component);
 			}
