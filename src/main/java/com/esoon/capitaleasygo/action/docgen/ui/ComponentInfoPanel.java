@@ -6,14 +6,18 @@
 package com.esoon.capitaleasygo.action.docgen.ui;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -24,6 +28,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
+
+import com.esoon.capitaleasygo.util.GridBagHelper;
+import com.esoon.capitaleasygo.util.JTBorderFactory;
 
 /**
  *
@@ -54,8 +61,8 @@ public class ComponentInfoPanel extends JPanel {
 
 	private List colNames = new ArrayList();
 	private List<List<Object>> dataList = new ArrayList<List<Object>>();
-	private Object[][] dataArr =null;
-	private Object[] headArr =null;
+	private Object[][] dataArr = null;
+	private Object[] headArr = null;
 
 	public ComponentInfoPanel(List<Object> colNames, List<List<Object>> dataList) {
 		super(new BorderLayout());
@@ -66,19 +73,20 @@ public class ComponentInfoPanel extends JPanel {
 	}
 
 	private void initControls() {
+		widgetPanel = createWidgetPanel();
 		dataArr = new Object[dataList.size()][colNames.size()];
 		for (int i = 0; i < dataList.size(); i++) {
 			for (int j = 0; j < dataList.get(i).size(); j++) {
 				dataArr[i][j] = dataList.get(i).get(j);
 			}
-			
+
 		}
 		headArr = colNames.toArray();
 //        widgetPanel = createWidgetPanel();
 		tablePanel = createTablePanel();
-//        splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, widgetPanel, tablePanel);
-//        splitPane.setDividerLocation(320);
-		add(tablePanel, BorderLayout.CENTER);
+        splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, widgetPanel, tablePanel);
+        splitPane.setDividerLocation(320);
+		add(splitPane, BorderLayout.CENTER);
 
 //        deleteButton.addActionListener(new ActionListener() {
 //            public void actionPerformed(ActionEvent ev) {
@@ -91,94 +99,114 @@ public class ComponentInfoPanel extends JPanel {
 
 	}
 
-//    private JPanel createWidgetPanel() {
-//        JPanel panel = new JPanel(new BorderLayout());
-//        panel.add(createFormPanel(), BorderLayout.CENTER);
-//        panel.add(createButtonPanel(), BorderLayout.EAST);
-//        return panel;
-//    }
+	private JPanel createWidgetPanel() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(createFormPanel(), BorderLayout.CENTER);
+		panel.add(createButtonPanel(), BorderLayout.EAST);
+		return panel;
+	}
 
-//    private JScrollPane createFormPanel() {
-//        addressCombo = new JComboBox(new String[] {"Mr.", "Mrs.", "Sir", "Lady", "Herr", "Frau"} );
-//        firstNameField = new JTextField();
-//        lastNameField = new JTextField();
-//        streetField = new JTextField();
-//        cityField = new JTextField();
-//        
-//        JPanel radioPanel = new JPanel(new BorderLayout());
-//        radioPanel.setBorder(JTBorderFactory.createTitleBorder("favorite color"));
-//        redButton = new JRadioButton("red");
-//        greenButton = new JRadioButton("green");
-//        blueButton = new JRadioButton("blue");
-//        radioPanel.add(redButton, BorderLayout.NORTH);
-//        radioPanel.add(greenButton, BorderLayout.CENTER);
-//        radioPanel.add(blueButton, BorderLayout.SOUTH);
-//        buttonGroup = new ButtonGroup();
-//        buttonGroup.add(redButton);
-//        buttonGroup.add(greenButton);
-//        buttonGroup.add(blueButton);
-//        redButton.setSelected(true);
-//        
-//        JPanel checkPanel = new JPanel(new BorderLayout());
-//        checkPanel.setBorder(JTBorderFactory.createTitleBorder("favorite food"));
-//        bananaButton = new JCheckBox("bananas");
-//        burgerButton = new JCheckBox("hamburgers");
-//        icecreamButton = new JCheckBox("icecream");
-//        checkPanel.add(bananaButton, BorderLayout.NORTH);
-//        checkPanel.add(burgerButton, BorderLayout.CENTER);
-//        checkPanel.add(icecreamButton, BorderLayout.SOUTH);
-//        
-//        JPanel panel = new JPanel(new GridBagLayout());
-//        //panel.setOpaque(false);
-//        JPanel topDistPanel = new JPanel();
-//        JPanel bottomDistPanel = new JPanel();
-//        GridBagHelper.addComponent(panel, topDistPanel,            0, 0, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST);
-//        
-//        GridBagHelper.addComponent(panel, new JLabel("Salutation"),0, 1, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, addressCombo,            1, 1, 1, 1, 0, 0, 0.3, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST);
-//        GridBagHelper.addComponent(panel, new JPanel(),            2, 1, 1, 1, 0, 0, 0.7, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-//        
-//        GridBagHelper.addComponent(panel, new JLabel("Firstname"), 0, 2, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, firstNameField,          1, 2, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, new JLabel("Lastname"),  0, 3, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, lastNameField,           1, 3, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, new JLabel("Street"),    0, 4, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, streetField,             1, 4, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, new JLabel("City"),      0, 5, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, cityField,               1, 5, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-//        
-//        GridBagHelper.addComponent(panel, radioPanel,              0, 6, 2, 1, 0, 0, 0.0, 0.0, GridBagConstraints.BOTH, GridBagConstraints.WEST);
-//        GridBagHelper.addComponent(panel, checkPanel,              2, 6, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.BOTH, GridBagConstraints.WEST);
-//        
-//        GridBagHelper.addComponent(panel, bottomDistPanel,         0, 10, 1, 1, 0, 0, 0.0, 1.0, GridBagConstraints.VERTICAL, GridBagConstraints.NORTHWEST);
-//
-//        JScrollPane scrollPane = new JScrollPane(panel);
-//        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-//        return scrollPane;
-//    }
+	private JScrollPane createFormPanel() {
+		addressCombo = new JComboBox(new String[] { "Mr.", "Mrs.", "Sir", "Lady", "Herr", "Frau" });
+		firstNameField = new JTextField();
+		lastNameField = new JTextField();
+		streetField = new JTextField();
+		cityField = new JTextField();
 
-//    private JScrollPane createButtonPanel() {
-//        JPanel panel = new JPanel(new GridBagLayout());
-//        updateButton = new JButton("update");
-//        updateButton.setDefaultCapable(true);
-//        insertButton = new JButton("insert");
-//        deleteButton = new JButton("delete");
-//        
-//        GridBagHelper.setMinRowHeight(panel, 0, 8);
-//        GridBagHelper.setMinColWidth(panel, 0, 100);
-//        GridBagHelper.addComponent(panel, updateButton, 0, 1, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST);
-//        GridBagHelper.addComponent(panel, insertButton, 0, 2, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST);
-//        GridBagHelper.addComponent(panel, deleteButton, 0, 3, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST);
-//        GridBagHelper.addComponent(panel, new JPanel(), 0, 4, 1, 1, 0, 0, 0.0, 1.0, GridBagConstraints.VERTICAL,   GridBagConstraints.NORTHWEST);
+		JPanel radioPanel = new JPanel(new BorderLayout());
+		radioPanel.setBorder(JTBorderFactory.createTitleBorder("favorite color"));
+		redButton = new JRadioButton("red");
+		greenButton = new JRadioButton("green");
+		blueButton = new JRadioButton("blue");
+		radioPanel.add(redButton, BorderLayout.NORTH);
+		radioPanel.add(greenButton, BorderLayout.CENTER);
+		radioPanel.add(blueButton, BorderLayout.SOUTH);
+		buttonGroup = new ButtonGroup();
+		buttonGroup.add(redButton);
+		buttonGroup.add(greenButton);
+		buttonGroup.add(blueButton);
+		redButton.setSelected(true);
+
+		JPanel checkPanel = new JPanel(new BorderLayout());
+		checkPanel.setBorder(JTBorderFactory.createTitleBorder("favorite food"));
+		bananaButton = new JCheckBox("bananas");
+		burgerButton = new JCheckBox("hamburgers");
+		icecreamButton = new JCheckBox("icecream");
+		checkPanel.add(bananaButton, BorderLayout.NORTH);
+		checkPanel.add(burgerButton, BorderLayout.CENTER);
+		checkPanel.add(icecreamButton, BorderLayout.SOUTH);
+
+		JPanel panel = new JPanel(new GridBagLayout());
+		// panel.setOpaque(false);
+		JPanel topDistPanel = new JPanel();
+		JPanel bottomDistPanel = new JPanel();
+		GridBagHelper.addComponent(panel, topDistPanel, 0, 0, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.NORTHWEST);
+
+		GridBagHelper.addComponent(panel, new JLabel("Group Name"), 0, 1, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, addressCombo, 1, 1, 1, 1, 0, 0, 0.3, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.NORTHWEST);
+		GridBagHelper.addComponent(panel, new JPanel(), 2, 1, 1, 1, 0, 0, 0.7, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.WEST);
+
+		GridBagHelper.addComponent(panel, new JLabel("Firstname"), 0, 2, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, firstNameField, 1, 2, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, new JLabel("Lastname"), 0, 3, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, lastNameField, 1, 3, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, new JLabel("Street"), 0, 4, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, streetField, 1, 4, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, new JLabel("City"), 0, 5, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.NONE,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, cityField, 1, 5, 3, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.WEST);
+
+		GridBagHelper.addComponent(panel, radioPanel, 0, 6, 2, 1, 0, 0, 0.0, 0.0, GridBagConstraints.BOTH,
+				GridBagConstraints.WEST);
+		GridBagHelper.addComponent(panel, checkPanel, 2, 6, 1, 1, 0, 0, 0.0, 0.0, GridBagConstraints.BOTH,
+				GridBagConstraints.WEST);
+
+		GridBagHelper.addComponent(panel, bottomDistPanel, 0, 10, 1, 1, 0, 0, 0.0, 1.0, GridBagConstraints.VERTICAL,
+				GridBagConstraints.NORTHWEST);
+
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		return scrollPane;
+	}
+
 //
-//        JScrollPane scrollPane = new JScrollPane(panel);
-//        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-//        
-//        return scrollPane;
-//    }
+	private JScrollPane createButtonPanel() {
+		JPanel panel = new JPanel(new GridBagLayout());
+		updateButton = new JButton("update");
+		updateButton.setDefaultCapable(true);
+		insertButton = new JButton("insert");
+		deleteButton = new JButton("delete");
+
+		GridBagHelper.setMinRowHeight(panel, 0, 8);
+		GridBagHelper.setMinColWidth(panel, 0, 100);
+		GridBagHelper.addComponent(panel, updateButton, 0, 1, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.NORTHWEST);
+		GridBagHelper.addComponent(panel, insertButton, 0, 2, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.NORTHWEST);
+		GridBagHelper.addComponent(panel, deleteButton, 0, 3, 1, 1, 0, 0, 1.0, 0.0, GridBagConstraints.HORIZONTAL,
+				GridBagConstraints.NORTHWEST);
+		GridBagHelper.addComponent(panel, new JPanel(), 0, 4, 1, 1, 0, 0, 0.0, 1.0, GridBagConstraints.VERTICAL,
+				GridBagConstraints.NORTHWEST);
+
+		JScrollPane scrollPane = new JScrollPane(panel);
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+		return scrollPane;
+	}
 
 	private JScrollPane createTablePanel() {
-		DefaultTableModel model = new DefaultTableModel(dataArr,headArr);
+		DefaultTableModel model = new DefaultTableModel(dataArr, headArr);
 		table = new JTable(model);
 //        TableColumn tableCol = table.getColumnModel().getColumn(5);
 //        tableCol.setCellRenderer(new CheckBoxRenderer());
@@ -209,52 +237,53 @@ public class ComponentInfoPanel extends JPanel {
 			column.setPreferredWidth(Math.max(headerWidth, cellWidth));
 		}
 	}
-	
-	public void FitTableColumns(JTable myTable) {               //設置table的列寬隨內容調整
 
-        JTableHeader header = myTable.getTableHeader();
+	public void FitTableColumns(JTable myTable) { // 設置table的列寬隨內容調整
 
-        int rowCount = myTable.getRowCount();
+		JTableHeader header = myTable.getTableHeader();
 
-        Enumeration columns = myTable.getColumnModel().getColumns();
+		int rowCount = myTable.getRowCount();
 
-        while (columns.hasMoreElements()) {
+		Enumeration columns = myTable.getColumnModel().getColumns();
 
-            TableColumn column = (TableColumn) columns.nextElement();
+		while (columns.hasMoreElements()) {
 
-            int col = header.getColumnModel().getColumnIndex(
+			TableColumn column = (TableColumn) columns.nextElement();
 
-                    column.getIdentifier());
+			int col = header.getColumnModel().getColumnIndex(
 
-            int width = (int) myTable.getTableHeader().getDefaultRenderer()
+					column.getIdentifier());
 
-                    .getTableCellRendererComponent(myTable,
+			int width = (int) myTable.getTableHeader().getDefaultRenderer()
 
-                            column.getIdentifier(), false, false, -1, col)
+					.getTableCellRendererComponent(myTable,
 
-                    .getPreferredSize().getWidth();
+							column.getIdentifier(), false, false, -1, col)
 
-            for (int row = 0; row < rowCount; row++){
+					.getPreferredSize().getWidth();
 
-                int preferedWidth = (int) myTable.getCellRenderer(row, col)
+			for (int row = 0; row < rowCount; row++) {
 
-                        .getTableCellRendererComponent(myTable,
+				int preferedWidth = (int) myTable.getCellRenderer(row, col)
 
-                                myTable.getValueAt(row, col), false, false,
+						.getTableCellRendererComponent(myTable,
 
-                                row, col).getPreferredSize().getWidth();
+								myTable.getValueAt(row, col), false, false,
 
-                width = Math.max(width, preferedWidth);
+								row, col)
+						.getPreferredSize().getWidth();
 
-            }
+				width = Math.max(width, preferedWidth);
 
-            header.setResizingColumn(column);
+			}
 
-            column.setWidth(width + myTable.getIntercellSpacing().width);
+			header.setResizingColumn(column);
 
-        }
+			column.setWidth(width + myTable.getIntercellSpacing().width);
 
-    }
+		}
+
+	}
 
 	public void setVisible(boolean aFlag) {
 		super.setVisible(aFlag);

@@ -41,7 +41,7 @@ import com.mentor.capital.project.Wire;
 public class DocGenUtil {
 	
 	private static DocGenUtil docGenUtil;
-	private static String designXmlPath = "C:\\Users\\35725\\eclipse-workspace\\capitaleasygo\\docs\\DocGen\\Project\\design\\harnessdesign\\DOOR_LF.xml";
+	private static String designXmlPath = "C:\\Users\\35725\\eclipse-workspace\\capitaleasygo\\docs\\DocGen\\Project\\design\\harnessdesign\\W1.xml";
 	
 	
 	    /**

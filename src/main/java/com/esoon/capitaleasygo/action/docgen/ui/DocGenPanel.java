@@ -151,6 +151,8 @@ public class DocGenPanel extends JPanel {
 		tabbedPane.add(tabPanePanel.getName(), tabPanePanel);
 		tabbedPane.add(tablePanel.getName(), tablePanel);
 		tabbedPane.add("BigButton", bigButtonPanel);
+		tabbedPane.add("WidgetPanel", new WidgetPanel());
+		tabbedPane.add("WidgetWithRowSorterPanel", new WidgetWithRowSorterPanel());
 
 		tabbedPane.setTabPlacement(JTabbedPane.LEFT);
 		tabbedPane.setSelectedIndex(1);
